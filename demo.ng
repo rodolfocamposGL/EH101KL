@@ -1,0 +1,8 @@
+modules load recon/hosts-hosts/resolve
+options set SOURCE microsoft.com
+run
+modules load reporting/html
+options set FILENAME /root/results.html
+options set CUSTOMER GhostClient
+options set CREATOR Student
+run
