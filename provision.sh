@@ -6,7 +6,7 @@
 
 
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --force-yes
 
 echo "[+] Installing VirtualBox Guest Addtions in Kali Linux"
 apt-get install -y virtualbox-guest-x11
@@ -23,11 +23,6 @@ apt-get install -y exiftool
 apt-get install -y httrack
 
 
-echo "[+] Installing Openvas"
-apt-get install -y openvas
-openvas-setup
-openvasmd --user=admin -new-password=admin
-
 # Setting Up Metasploit
 echo "[+] Initializing Metasploit Database"
 msfdb init
@@ -40,7 +35,7 @@ nmap --script-updatedb
 echo "[+] Updating Nmap Script Database"
 git clone https://github.com/laramies/theHarvester
 cd theHarvester
-pip3 -r requirements.txt
+pip3 install -r requirements.txt
 cd ..
 
 # Installing Arachni-Web UI
@@ -50,6 +45,13 @@ tar xvzf arachni-1.5.1-0.5.12-linux-x86_64.tar.gz
 mv arachni-1.5.1-0.5.12 arachni
 
 
+echo "[+] Installing Openvas"
+apt-get install -y openvas
+openvas-setup
+openvasmd --user=admin -new-password=admin
+
 # Provision Plugins
 echo "[+] Installing Recon-ng Plugins"
-recon-ng $(pwd)/plugins.ng
+recon-ng -r $(pwd)/plugins.ng
+
+

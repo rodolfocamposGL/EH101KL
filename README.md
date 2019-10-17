@@ -125,6 +125,8 @@ nmap -p 1-200 $MS2
 
 echo $MS2 > nmap-input-file.txt
 nmap -iL -sT
+
+nmap --script discover,safe $MS2
 ```
 
 ### enum4linux
