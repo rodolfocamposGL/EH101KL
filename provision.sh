@@ -54,4 +54,8 @@ openvasmd --user=admin -new-password=admin
 echo "[+] Installing Recon-ng Plugins"
 recon-ng -r $(pwd)/plugins.ng
 
+# Installing Dradis
+echo "[+] Installing Dradis CE"
+apt-get install -y dradis
+
 

