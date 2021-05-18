@@ -50,19 +50,18 @@ exiftool -h
 ### theharvester
 
 ```
-cd theHarvester
-python3 theHarvester.py -d microsoft.com -b bing -l 5 > result.txt
+theHarvester.py -d microsoft.com -b bing -l 5 > result.txt
 ```
 
 ### maltego
 
-```
+```bash
 maltego
 ```
 
 ### recon-ng
 
-```
+```bash
 recon-ng
 ```
 
@@ -71,7 +70,7 @@ recon-ng
 
 ### dirb
 
-```
+```bash
 dirb http://$MS2/
 ```
 
@@ -80,7 +79,7 @@ dirb http://$MS2/
 
 ### httrack
 
-```
+```bash
 httrack http://$MS2/ -O /copyweb
 ```
 
@@ -88,33 +87,37 @@ httrack http://$MS2/ -O /copyweb
 
 #### Ping Sweep Scan
 
-```
+```bash
 nmap -sP $NETRANGE
 ```
 
 #### TCP Full Scan
 
-```
+```bash
 nmap -sT $MS2 -oA nmap-output
 ```
 
 #### TCP Full Scan
-```
+
+```bash
 nmap -sT $MS2 -oA nmap-output-fullscan
 ```
 
 #### Steath Scan
-```
+
+```bash
 nmap -sS $MS2 -oA nmap-output-steathscan
 ```
 
 #### Version Scan
-```
+
+```bash
 nmap -sV $MS2 -oA nmap-output-versionscan
 ```
 
 #### Other Commands
-```
+
+```bash
 nmap -F $MS2
 
 nmap -sn $MS2
@@ -131,13 +134,13 @@ nmap --script discover,safe $MS2
 
 ### enum4linux
 
-```
+```bash
 enum4linux $MS2 > enum4linux-output.txt
 ```
 
 ### cewl
 
-```
+```bash
 cewl http://$MS2/dvwa -w words.txt
 ```
 
@@ -149,19 +152,20 @@ cewl http://$MS2/dvwa -w words.txt
 
 ### Dimitry
 
-```
-dmitry -s microsoft.com
+```bash
+dmitry -s $DOMAIN_NAME
 ```
 
 ### Wafw00f
 
-```
+```bash
 wafw00f http://$MS2
 ```
 
 
 ### Recon-ng
-```
+
+```bash
 recong-ng
 ```
 
@@ -169,31 +173,70 @@ recong-ng
 
 ### Nmap Vulnerability Scan
 
-```
+```bash
 nmap --script vuln $MS2
 ```
 
 
 ### Skipfish
 
-```
+```bash
 skipfish -o mutillidae http://$MS2/multillidae
 ```
+
+### GVM (OpenVAS)
+
+Execute the following commands to reset the admin password:
+
+```bash
+sudo runuser -u _gvm -- gvmd --user=admin --new-password=PASSWORD
+```
+
+Grating permission to ospd to the default scanner
+
+```bash
+sudo runuser -u _gvm -- gvmd --get-scanners
+```
+
+You will need to get the ID from the OpenVAS Default 
+
+```bash
+sudo runuser -u _gvm -- gvmd --modify-scanner=<ID_OF_SCANNER> --scanner-host=/var/run/ospd/ospd-openvas.sock
+```
+
+Modify Redis 
+
+```bash
+sudo cat /etc/redis/redis-openvas.conf | grep unixsocket
+```
+
+```bash
+echo "db_address = /var/run/redis-openvas/redis.sock" | sudo tee /etc/openvas/openvas.conf
+```
+
+Start the GVM (OpenVAS) service
+
+```bash
+sudo gvm-start
+```
+
 
 ## Module 04: Exploitation
 Metasploit uses postgresql as detault database, remember to start the postgresql server
 
-```
+```bash
 service postgresql start
 ```
 
 Use automation scripts with metasploit
-```
+
+```bash
 msfconsole -q -r exploits/exploit_01_vsftpd.rc
 ```
 
 Export records from database to a XML file
-```
+
+```bash
 msfconsole -q -x "db_export -f xml /root/msf_results.xml"
 ```
 
@@ -201,7 +244,7 @@ msfconsole -q -x "db_export -f xml /root/msf_results.xml"
 
 You need to have an active **meterpreter** session, review exploit/exploit_04
 
-```
+```bash
 msfconsole -q
 ``` 
 
@@ -243,6 +286,7 @@ msf5 post(multi/gather/tomcat_gather) > run
 ### Dradis
 
 Execute the command and visit http://localhost:3000 with your browser
-```
+
+```bash
 service dradis start
 ```

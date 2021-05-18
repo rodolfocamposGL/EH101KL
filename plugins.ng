@@ -87,3 +87,5 @@ marketplace install reporting/proxifier
 marketplace install reporting/pushpin
 marketplace install reporting/xlsx
 marketplace install reporting/xml
+exit
+
